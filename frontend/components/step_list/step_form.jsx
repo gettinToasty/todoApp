@@ -22,12 +22,8 @@ class StepForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let id = uniqueID();
-    const p = new Promise((resolve) => {
-      this.props.receiveStep(merge({id: id, todo_id: this.props.todoId}, this.state));
-      resolve();
-    });
-    p.then(this.resetForm);
+    const {todoId, createStep} = this.props;
+    createStep(merge({todo_id: todoId}, this.state)).then(this.resetForm);
   }
 
   resetForm() {

@@ -25,7 +25,7 @@ class TodoListItem extends React.Component {
         <h3 onClick={this.toggleDetail}>
           {this.props.todo.title}
         </h3>
-        <button onClick={this.props.receiveTodo.bind(
+        <button onClick={this.props.updateTodo.bind(
             null,
             Object.assign({}, this.props.todo, {done: !this.props.todo.done})
           )}>

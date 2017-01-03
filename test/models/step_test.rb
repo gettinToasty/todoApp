@@ -1,18 +1,20 @@
 # == Schema Information
 #
-# Table name: todos
+# Table name: steps
 #
 #  id         :integer          not null, primary key
 #  title      :string           not null
 #  body       :string           not null
 #  done       :boolean          not null
+#  todo_id    :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
-class Todo < ApplicationRecord
-  validates :title, :body, presence: true
-  validates :done, inclusion: { in: [true, false] }
+require 'test_helper'
 
-  has_many :steps
+class StepTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
 end

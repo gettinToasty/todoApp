@@ -10,7 +10,7 @@ class StepListItem extends React.Component {
       <li>
         {this.props.step.title}<br />
         {this.props.step.body}<br />
-      <button onClick={this.props.receiveStep.bind(
+      <button onClick={this.props.updateStep.bind(
           null,
           Object.assign(
             {},
@@ -20,7 +20,7 @@ class StepListItem extends React.Component {
           {this.props.step.done ? "Undo" : "Done"}
         </button>
 
-        <button onClick={this.props.removeStep.bind(
+        <button onClick={this.props.deleteStep.bind(
             null,
             this.props.step
           )}>
