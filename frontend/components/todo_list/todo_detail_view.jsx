@@ -11,6 +11,12 @@ class TodoDetailView extends React.Component {
       <div>
         {this.props.todo.body}
 
+        <ul>
+          {this.props.todo.tags.map((tag, i) => {
+            return <li key={i}>{tag.name}</li>;
+          })}
+        </ul>
+
         <StepListContainer todoId={this.props.todo.id}/>
 
         <button onClick={this.props.deleteTodo.bind(null, this.props.todo)}>

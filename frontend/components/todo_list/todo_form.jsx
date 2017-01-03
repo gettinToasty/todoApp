@@ -4,11 +4,13 @@ import merge from 'lodash/merge';
 class TodoForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { title: "", body: "", done: false};
+    this.state = { title: "", body: "", done: false, tag_names: [], curTagName: ""};
     this.updateTitle = this.updateTitle.bind(this);
     this.updateBody = this.updateBody.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.resetForm = this.resetForm.bind(this);
+    this.updateTag = this.updateTag.bind(this);
+    this.updateTags = this.updateTags.bind(this);
   }
 
   updateTitle(e) {
@@ -19,6 +21,22 @@ class TodoForm extends React.Component {
     this.setState({ body: e.target.value });
   }
 
+  updateTag(e) {
+    this.setState({ curTagName: e.target.value });
+  }
+
+  updateTags(e) {
+    e.preventDefault();
+    this.setState(
+      { tag_names: [...this.state.tag_names, this.state.curTagName]},
+      this.resetTag
+    );
+  }
+
+  resetTag() {
+    this.setState({ curTagName: "" });
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     this.props.createTodo(this.state)
@@ -27,7 +45,7 @@ class TodoForm extends React.Component {
   }
 
   resetForm() {
-    this.setState({ title: "", body: "" });
+    this.setState({ title: "", body: "", tag_names: [] });
   }
 
   render() {
@@ -50,6 +68,18 @@ class TodoForm extends React.Component {
             <textarea onChange={this.updateBody} value={this.state.body}>
             </textarea>
           </label><br />
+
+          <ul>
+            {this.state.tag_names.map((tagName, i) => {
+              return <li key={i}>{tagName}</li>;
+            })}
+          </ul>
+          <br />
+          <input
+            type='text'
+            value={this.state.curTagName}
+            onChange={this.updateTag}></input>
+          <button type='button' onClick={this.updateTags}>Add Tag</button>
 
           <input type="submit" value="Add Todo" />
         </form>
