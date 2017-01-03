@@ -17,11 +17,18 @@ class Api::TodosController < ApplicationController
   end
 
   def update
-
+    @todo = Todo.find(params[:id])
+    if @todo.update(todo_params)
+      render json: @todo
+    else
+      render json: @todo.errors.full_messages, status: 422
+    end
   end
 
   def destroy
-
+    @todo = Todo.find(params[:id])
+    @todo.destroy
+    render json: @todo
   end
 
   private
