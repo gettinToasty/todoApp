@@ -1,5 +1,4 @@
 import React from 'react';
-import {uniqueID} from '../../util/api_util';
 import merge from 'lodash/merge';
 
 class TodoForm extends React.Component {
@@ -22,12 +21,9 @@ class TodoForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let id = uniqueID();
-    const p = new Promise((resolve) => {
-      this.props.receiveTodo(merge({id: id}, this.state));
-      resolve();
-    });
-    p.then(this.resetForm);
+    this.props.createTodo(this.state)
+      .then(this.resetForm)
+      .then(this.props.clearErrors);
   }
 
   resetForm() {
@@ -38,6 +34,9 @@ class TodoForm extends React.Component {
     return (
       <div>
         <h2>Add Todo:</h2>
+        {this.props.errors.map((error, i) => {
+          return <p key={i}>{error}</p>;
+        })}
         <form onSubmit={this.handleSubmit}>
           <label>
             Title:
@@ -51,7 +50,6 @@ class TodoForm extends React.Component {
             <textarea onChange={this.updateBody} value={this.state.body}>
             </textarea>
           </label><br />
-
 
           <input type="submit" value="Add Todo" />
         </form>

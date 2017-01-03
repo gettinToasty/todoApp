@@ -1,4 +1,5 @@
-import {requestTodos} from '../util/api_util';
+import {requestTodos, addTodo} from '../util/api_util';
+import { receiveErrors } from './error_actions';
 
 export const RECEIVE_TODOS = "RECEIVE_TODOS";
 export const RECEIVE_TODO = "RECEIVE_TODO";
@@ -20,5 +21,12 @@ export const removeTodo = todo => ({
 });
 
 export const fetchTodos = () => dispatch => {
-  requestTodos().then(res => dispatch(receiveTodos(res)));
+  return requestTodos().then(res => dispatch(receiveTodos(res)));
+};
+
+export const createTodo = (todo) => dispatch => {
+  return addTodo(todo).then(
+    res => dispatch(receiveTodo(res)),
+    err => dispatch(receiveErrors(err.responseJSON))
+  );
 };
